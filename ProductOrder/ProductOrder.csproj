@@ -103,8 +103,25 @@
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Models\PO_Orders.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PO_Orders.edmx</DependentUpon>
+      <LastGenOutput>PO_Orders.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\PO_Orders.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PO_Orders.edmx</DependentUpon>
+      <LastGenOutput>PO_Orders.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\PO_Orders.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>PO_Orders.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\PO_Orders.edmx.diagram">
+      <DependentUpon>PO_Orders.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -120,7 +137,24 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\IProductRepository.cs" />
-    <Compile Include="Models\ProductOrderList.cs" />
+    <Compile Include="Models\PO_Orders.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PO_Orders.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PO_Orders.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PO_Orders.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PO_Orders.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PO_Orders.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductOrderList.cs">
+      <DependentUpon>PO_Orders.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProductRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -144,6 +178,9 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Product\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

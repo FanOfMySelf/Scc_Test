@@ -24,12 +24,12 @@ function ProductOrderViewModel() {
 
     self.Product = ko.observable();
     self.Products = ko.observableArray(); // Contains the list of products
-
-    var url = MyAppUrlSettings.MyUsefulUrl;
+   
+    
 
     $.ajax({
         //url: '@Url.Action("GetAllProducts", "ProductOrder")',
-        url: MyAppUrlSettings, MyUsefulUrl,
+        url: MyAppUrlSettings.MyUsefulUrl,
         cache: false,
         type: 'GET',
         contentType: 'application/json; charset=utf-8',

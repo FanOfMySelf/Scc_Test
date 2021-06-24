@@ -25,7 +25,7 @@ function ProductOrderViewModel() {
     self.Supplier = ko.observable("");
     self.Stock_Site = ko.observable("");
     self.Stock_Name = ko.observable("");
-    self.Oder_Date = ko.observable("2013-06-17T11:56:18.4537687Z");
+    self.Oder_Date = ko.observable();
     self.Last_Update = ko.observable(); 
     
   
@@ -62,14 +62,7 @@ function ProductOrderViewModel() {
             
         }
     });
-   // this.Productss=self.Products()
-    //console.log(this.Productss());
-    for (var i = 0; i < self.Products().length; i++)
-    {
-       
-        //this.Productss.push(new Product(self.Products()[i].Order_No, self.Products()[i].Supplier, self.Products()[i].Stock_Site, self.Products()[i].Stock_Name, self.Products()[i].Order_Date, self.Products()[i].Last_Update))
-    }
-    //console.log(this.Productss());
+   
 }
 var viewModel = new ProductOrderViewModel();
 ko.applyBindings(viewModel);

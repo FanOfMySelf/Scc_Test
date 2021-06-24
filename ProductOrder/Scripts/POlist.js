@@ -11,7 +11,7 @@ function ProductOrderViewModel() {
     self.Stock_Name = ko.observable("");
     self.Order_Date = ko.observable("");
     self.Last_Update = ko.observable(""); 
-    //a
+    
 
     var Product = {
         Order_No: self.Order_No,
@@ -25,17 +25,21 @@ function ProductOrderViewModel() {
     self.Product = ko.observable();
     self.Products = ko.observableArray(); // Contains the list of products
 
+    var url = MyAppUrlSettings.MyUsefulUrl;
+
     $.ajax({
-        url: '@Url.Action("GetAllProducts", "ProductOrder")',
+        //url: '@Url.Action("GetAllProducts", "ProductOrder")',
+        url: MyAppUrlSettings, MyUsefulUrl,
         cache: false,
         type: 'GET',
         contentType: 'application/json; charset=utf-8',
         data: {},
         success: function (data) {
             self.Products(data); //Put the response in ObservableArray
+            console.log(data);
         }
     });
-    console.log(self.Products());
+  
   
     
 }

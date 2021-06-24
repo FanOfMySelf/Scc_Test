@@ -54,8 +54,8 @@ namespace ProductOrder.Controllers
         {
             using (POentity db = new POentity())
             {
-                List<ProductOrderList> employeeList = db.ProductOrderLists.ToList<ProductOrderList>();
-                return Json(new { data = employeeList }, JsonRequestBehavior.AllowGet);
+                List<ProductOrderList> POList = db.ProductOrderLists.ToList<ProductOrderList>();
+                return Json(new { data = POList }, JsonRequestBehavior.AllowGet);
             }
         }
 

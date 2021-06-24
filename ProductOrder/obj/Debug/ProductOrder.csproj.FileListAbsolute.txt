@@ -1,4 +1,3 @@
-C:\Users\Hoang\source\repos\ProductOrder\ProductOrder\obj\Debug\ProductOrder.csprojAssemblyReference.cache
 C:\Users\Hoang\source\repos\ProductOrder\ProductOrder\obj\Debug\ProductOrder.csproj.CoreCompileInputs.cache
 C:\Users\Hoang\source\repos\ProductOrder\ProductOrder\bin\ProductOrder.dll.config
 C:\Users\Hoang\source\repos\ProductOrder\ProductOrder\bin\ProductOrder.dll

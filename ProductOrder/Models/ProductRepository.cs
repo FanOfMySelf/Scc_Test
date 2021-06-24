@@ -14,7 +14,7 @@ namespace ProductOrder.Models
         public ProductRepository()
         {
             // Add products for the Demonstration
-            Add(new ProductOrderList { Order_No = 3, Supplier = "Electronics", Stock_Site = "ss123ss", Stock_Name = "zxczxc", Order_Date = DateTime.Now, Last_Update = DateTime.Now });
+            Add(new ProductOrderList { Order_No = 3, Supplier = "Electronics", Stock_Site = "ss123ss", Stock_Name = "zxczxc", Order_Date = default(DateTime), Last_Update = default(DateTime) });
             Add(new ProductOrderList { Order_No = 2, Supplier = "Electrasdasdonics", Stock_Site = "ssasdss", Stock_Name = "zxsdczxc", Order_Date = DateTime.UtcNow, Last_Update = DateTime.Now });
             Add(new ProductOrderList { Order_No = 1, Supplier = "Electxxxzzzzronics", Stock_Site = "ssss", Stock_Name = "zxcsdzxc", Order_Date = DateTime.UtcNow, Last_Update = DateTime.Now });
         }

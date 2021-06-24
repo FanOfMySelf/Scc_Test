@@ -11,6 +11,14 @@ namespace ProductOrder.Models
         private List<ProductOrderList> products = new List<ProductOrderList>();
         private int _nextOrder_No = 1;
 
+        public ProductRepository()
+        {
+            // Add products for the Demonstration
+            Add(new ProductOrderList { Order_No = 3, Supplier = "Electronics", Stock_Site = "ss123ss", Stock_Name="zxczxc", Order_Date = DateTime.UtcNow, Last_Update=DateTime.Now });
+            Add(new ProductOrderList { Order_No = 2, Supplier = "Electrasdasdonics", Stock_Site = "ssasdss", Stock_Name = "zxsdczxc", Order_Date = DateTime.UtcNow, Last_Update = DateTime.Now });
+            Add(new ProductOrderList { Order_No = 1, Supplier = "Electxxxzzzzronics", Stock_Site = "ssss", Stock_Name = "zxcsdzxc", Order_Date = DateTime.UtcNow, Last_Update = DateTime.Now });
+        }
+
         public ProductOrderList Add(ProductOrderList item)
         {
             if (item == null)

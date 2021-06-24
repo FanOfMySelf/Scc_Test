@@ -50,7 +50,14 @@ namespace ProductOrder.Controllers
 
         }
 
-       
+        public ActionResult GetData()
+        {
+            using (POentity db = new POentity())
+            {
+                List<ProductOrderList> employeeList = db.ProductOrderLists.ToList<ProductOrderList>();
+                return Json(new { data = employeeList }, JsonRequestBehavior.AllowGet);
+            }
+        }
 
     }
 }

@@ -103,24 +103,24 @@
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Models\PO_Orders.Context.tt">
+    <Content Include="Models\POlist.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>PO_Orders.edmx</DependentUpon>
-      <LastGenOutput>PO_Orders.Context.cs</LastGenOutput>
+      <DependentUpon>POlist.edmx</DependentUpon>
+      <LastGenOutput>POlist.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\PO_Orders.tt">
+    <Content Include="Models\POlist.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>PO_Orders.edmx</DependentUpon>
-      <LastGenOutput>PO_Orders.cs</LastGenOutput>
+      <DependentUpon>POlist.edmx</DependentUpon>
+      <LastGenOutput>POlist.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\PO_Orders.edmx">
+    <EntityDeploy Include="Models\POlist.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>PO_Orders.Designer.cs</LastGenOutput>
+      <LastGenOutput>POlist.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\PO_Orders.edmx.diagram">
-      <DependentUpon>PO_Orders.edmx</DependentUpon>
+    <Content Include="Models\POlist.edmx.diagram">
+      <DependentUpon>POlist.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -137,23 +137,23 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\IProductRepository.cs" />
-    <Compile Include="Models\PO_Orders.Context.cs">
+    <Compile Include="Models\POlist.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PO_Orders.Context.tt</DependentUpon>
+      <DependentUpon>POlist.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PO_Orders.cs">
+    <Compile Include="Models\POlist.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PO_Orders.tt</DependentUpon>
+      <DependentUpon>POlist.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PO_Orders.Designer.cs">
+    <Compile Include="Models\POlist.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PO_Orders.edmx</DependentUpon>
+      <DependentUpon>POlist.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductOrderList.cs">
-      <DependentUpon>PO_Orders.tt</DependentUpon>
+      <DependentUpon>POlist.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -2,72 +2,72 @@
     ViewBag.Title = "Products Order' List";
 }
 @*@section scripts {
-    <style type="text/css">
-        body {
-            margin: 20px;
-            font-family: "Arial", "Helventica", sans-serif;
-        }
+        <style type="text/css">
+            body {
+                margin: 20px;
+                font-family: "Arial", "Helventica", sans-serif;
+            }
 
-        label {
-            width: 80px;
-            display: inline-block;
-        }
+            label {
+                width: 80px;
+                display: inline-block;
+            }
 
-        button {
-            display: inline-block;
-            outline: none;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            padding: .4em 1.1em .4em;
-            color: #fef4e9;
-            border: solid 1px #006fb9;
-            background: #1276bb;
-        }
-
-            button:hover {
+            button {
+                display: inline-block;
+                outline: none;
+                cursor: pointer;
+                text-align: center;
                 text-decoration: none;
-                background: #282828;
-                border: solid 1px #000;
+                padding: .4em 1.1em .4em;
+                color: #fef4e9;
+                border: solid 1px #006fb9;
+                background: #1276bb;
             }
 
-        table {
-            padding-top: 1em;
-        }
-
-        thead, tfoot {
-            font-weight: 600;
-        }
-
-        th, td {
-            padding: .1em .5em;
-            text-align: left;
-        }
-
-            td li, td ul {
-                margin: 0;
-                padding: 0;
-            }
-
-            td li {
-                display: inline;
-            }
-
-                td li::after {
-                    content: ',';
+                button:hover {
+                    text-decoration: none;
+                    background: #282828;
+                    border: solid 1px #000;
                 }
 
-                td li:last-child::after {
-                    content: '';
+            table {
+                padding-top: 1em;
+            }
+
+            thead, tfoot {
+                font-weight: 600;
+            }
+
+            th, td {
+                padding: .1em .5em;
+                text-align: left;
+            }
+
+                td li, td ul {
+                    margin: 0;
+                    padding: 0;
                 }
-    </style>
-        
-}*@
+
+                td li {
+                    display: inline;
+                }
+
+                    td li::after {
+                        content: ',';
+                    }
+
+                    td li:last-child::after {
+                        content: '';
+                    }
+        </style>
+
+    }*@
 
 
 <script>
     var MyAppUrlSettings = {
-        MyUsefulUrl: '@Url.Action("GetAllProducts", "ProductOrder")'
+        MyUsefulUrl: '@Url.Action("GetData", "ProductOrder")'
     }
 
 
@@ -77,11 +77,12 @@
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/knockout.min.js"></script>
 <script src="~/Scripts/POlist.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <div id="body">
 
 
-    <table id="products1" data-bind="visible: Products().length > 0">
+    <table>
         <thead>
             <tr>
                 <th>Order_No</th>
@@ -92,7 +93,7 @@
                 <th>Last_Update</th>
             </tr>
         </thead>
-        <tbody data-bind="foreach: Products">
+        <tbody data-bind="foreach: self.Products">
             <tr>
                 <td data-bind="text: Order_No"></td>
                 <td data-bind="text: Supplier"></td>
@@ -109,7 +110,7 @@
     <br />
     <div style="border-top: solid 2px #282828; width: 430px; height: 10px"> </div>
 
-   
 
-   
+
+
 </div>

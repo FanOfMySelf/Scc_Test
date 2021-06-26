@@ -70,3 +70,4 @@ C:\Users\Hoang\source\repos\ProductOrder\ProductOrder\bin\Microsoft.CodeDom.Prov
 C:\Users\Hoang\source\repos\ProductOrder\ProductOrder\obj\Debug\ProductOrder.csproj.CopyComplete
 C:\Users\Hoang\source\repos\ProductOrder\ProductOrder\obj\Debug\ProductOrder.dll
 C:\Users\Hoang\source\repos\ProductOrder\ProductOrder\obj\Debug\ProductOrder.pdb
+C:\Users\Hoang\source\repos\ProductOrder\ProductOrder\obj\Debug\ProductOrder.csprojAssemblyReference.cache

@@ -26,7 +26,7 @@ function ProductOrderViewModel() {
     self.Stock_Site = ko.observable("");
     self.Stock_Name = ko.observable("");
     self.Oder_Date = ko.observable();
-    self.Last_Update = ko.observable(); 
+    self.Last_Update = ko.observable();
     
   
 
@@ -36,7 +36,7 @@ function ProductOrderViewModel() {
         self.Supplier = ko.observable(Supplier)
         self.Stock_Site = ko.observable(Stock_Site)
         self.Stock_Name = ko.observable(Stock_Name)
-        self.Oder_Date = ko.observable();
+        self.Order_Date = ko.observable();
         self.Last_Update = Date()
     };
 
@@ -58,11 +58,13 @@ function ProductOrderViewModel() {
         success: function (data) {
             
             self.Products(data);
-            console.log((data));
+            console.log(self.Products()[1])
             
         }
     });
-   
+
+    console.log(self.Products()[1])
+    
 }
 var viewModel = new ProductOrderViewModel();
 ko.applyBindings(viewModel);

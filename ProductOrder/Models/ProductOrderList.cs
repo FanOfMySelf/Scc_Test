@@ -18,7 +18,12 @@ namespace ProductOrder.Models
         public string Supplier { get; set; }
         public string Stock_Site { get; set; }
         public string Stock_Name { get; set; }
-        public System.DateTime Order_Date { get; set; }
-        public System.DateTime Last_Update { get; set; }
+        public string Order_Date { get; set; }
+        public string Last_Update { get; set; }
+        public string Address { get; set; }
+        public string Note { get; set; }
+        public string Country { get; set; }
+        public string Post_Code { get; set; }
+        public string Supplier_name { get; set; }
     }
 }

@@ -36,23 +36,33 @@
     <div>
 
         <table style="width:100%">
-            <thead><tr><th>Order_No</th><th>Supplier</th><th>Stock_Site</th><th>Stock_Name</th><th>Order_Date</th><th>Last_Update</th><th>Send Email</th></tr></thead>
+            <thead><tr><th>Order No</th><th>Supplier</th><th>Stock Site</th><th>Stock Name</th><th>Order Date</th><th>Last Update</th><th>Send Email</th></tr></thead>
             <tbody data-bind="foreach: Products">
                 <tr>
-                    <td data-bind="text: Order_No"></td>
+                    <td data-bind="text: Order_No, click: $root.select"></td>
                     <td data-bind="text: Supplier"></td>
                     <td data-bind="text: Stock_Site"></td>
                     <td data-bind="text: Stock_Name"></td>
-                    <td data-bind="text: '20/09/2000 12:00:00'"></td>
-                    <td data-bind="text: '20/09/2000 12:00:00'"></td>
-                    <td><input type="checkbox"/></td>
+                    <td data-bind="text: Order_Date"></td>
+                    <td data-bind="text: Last_Update"></td>
+                    <td><input type="checkbox" /></td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <p id="demo"></p>
+    <h2>Purchase order <span data-bind="text: $root.selected ().Order_No"></span></h2>
+    <p>Supplier: <span><input type="text" data-bind="value: $root.selected() .Supplier ,enable:false " /></span> </p>
+    <p>Stock Site: <span><input type="text" data-bind="value: $root.selected() .Stock_Site ,enable:false " /></span> </p>
+    <p>Order Date: <span><input type="text" data-bind="value: $root.selected() .Order_Date  " /></span> </p>
+    <p>Note: <input type="text" data-bind="textInput: $root.selected() .Note  " /></p>
+    <p>Supplier name: <span><input type="text" data-bind="value: $root.selected() .Supplier_name ,enable:false " /></span> </p>
+    <p>Stock Name: <span><input type="text" data-bind="value: $root.selected() .Stock_Name  " /></span> </p>
+    <p>Address<span style="color: red">*: </span>  <span><input type="text" data-bind="value: $root.selected() .Address  " /></span> </p>
+    <p>Country<span style="color: red">*: </span> <span><input type="text" data-bind="value: $root.selected() .Country  " /></span> </p>
+    <p>Postcode<span style="color: red">*: </span> <span><input type="text" data-bind="value: $root.selected() .Post_Code  " /></span> </p>
 
+    <p id="demo"></p>
 
     <script src="~/Scripts/jquery.js"></script>
     <script src="~/Scripts/knockout.min.js"></script>

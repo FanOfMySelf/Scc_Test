@@ -69,7 +69,7 @@ function ProductOrderViewModel() {
         $.ajax({
             type: "POST",
             url: Edit_PO_URL.MyEdit_PO_URL,
-            data: ko.toJSON(Product),
+            data: ko.toJSON(selected().Order_No,mProduct),
             contentType: "application/json; charset=utf-8",
             success: function (result) {
                 alert(result.d);

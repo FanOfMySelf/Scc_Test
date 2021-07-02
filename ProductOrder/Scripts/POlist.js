@@ -68,8 +68,8 @@ function ProductOrderViewModel() {
     self.EditPO = function () {
         $.ajax({
             type: "POST",
-            url: MyAppUrlSettings.MyUsefulUrl,
-            data: ko.toJSON({ data: self.Products().data.Order_No }, { data: self.Product }),
+            url: Edit_PO_URL.MyEdit_PO_URL,
+            data: ko.toJSON(Product),
             contentType: "application/json; charset=utf-8",
             success: function (result) {
                 alert(result.d);

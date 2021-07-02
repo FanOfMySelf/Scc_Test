@@ -31,10 +31,10 @@ namespace ProductOrder.Controllers
         }
 
         [HttpPost]
-        public JsonResult EditProduct(int OrderNo, ProductOrderList product)
+        public JsonResult EditProduct( ProductOrderList product)
         {
             
-            product.Order_No = OrderNo;
+            //product.Order_No = OrderNo;
             if (repository.Update(product))
             {
                 return Json(repository.GetAll(), JsonRequestBehavior.AllowGet);

@@ -34,6 +34,7 @@ function ProductOrderViewModel() {
     self.Products = ko.observableArray(); // Contains the list of products
     self.Productss = ko.observableArray();
     self.items = ko.observableArray();
+
     var testObj = {
         OrderNo : 1, product : self.Product
 
@@ -52,13 +53,13 @@ function ProductOrderViewModel() {
         success: function (data) {
 
             self.Products(data);
-            self.items(data)
+            //self.items(data)
 
         }
     });
 
     //Pick selected data in a row when clicked
-    self.selected = ko.observable(self.items().data[0])
+    self.selected = ko.observable(self.Products().data[0])
     self.select = function (item) {
         self.selected(item);
     }
@@ -72,13 +73,14 @@ function ProductOrderViewModel() {
         $.ajax({
             type: "POST",
             url: Edit_PO_URL.MyEdit_PO_URL,
-            data: ko.toJSON(testObj),
+            data: ko.toJSON(this.selected() ),
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 self.Products.removeAll();
                 self.Products(data); //Put the response in ObservableArray
                 self.Product(null);
                 alert("Record Updated Successfully");
+                self.ReloadPage();
             },
             error: function (err) {
                 alert(err.status + " - " + err.statusText);
@@ -86,8 +88,8 @@ function ProductOrderViewModel() {
         });
     };
 
-   
 
+    console.log(self.selected())
 }
 
 

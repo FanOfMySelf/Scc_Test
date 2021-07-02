@@ -34,6 +34,10 @@ function ProductOrderViewModel() {
     self.Products = ko.observableArray(); // Contains the list of products
     self.Productss = ko.observableArray();
     self.items = ko.observableArray();
+    var testObj = {
+        OrderNo : 1, product : self.Product
+
+    } 
 
     //Show PO list
     $.ajax({
@@ -68,7 +72,7 @@ function ProductOrderViewModel() {
         $.ajax({
             type: "POST",
             url: Edit_PO_URL.MyEdit_PO_URL,
-            data: ko.toJSON(Product),
+            data: ko.toJSON(testObj),
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 self.Products.removeAll();

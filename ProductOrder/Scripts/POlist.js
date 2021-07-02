@@ -54,7 +54,6 @@ function ProductOrderViewModel() {
     });
 
     //Pick selected data in a row when clicked
-    console.log(self.items().data)
     self.selected = ko.observable(self.items().data[0])
     self.select = function (item) {
         self.selected(item);
@@ -69,11 +68,13 @@ function ProductOrderViewModel() {
         $.ajax({
             type: "POST",
             url: Edit_PO_URL.MyEdit_PO_URL,
-            data: ko.toJSON(selected().Order_No,mProduct),
+            data: ko.toJSON(Product),
             contentType: "application/json; charset=utf-8",
-            success: function (result) {
-                alert(result.d);
-                self.ReloadPage();
+            success: function (data) {
+                self.Products.removeAll();
+                self.Products(data); //Put the response in ObservableArray
+                self.Product(null);
+                alert("Record Updated Successfully");
             },
             error: function (err) {
                 alert(err.status + " - " + err.statusText);

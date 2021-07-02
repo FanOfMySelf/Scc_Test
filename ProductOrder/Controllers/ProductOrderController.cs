@@ -42,14 +42,7 @@ namespace ProductOrder.Controllers
             return Json(null);
         }
 
-        [HttpPost]
-        public string UpdatePO(ProductOrderList product)
-        {
-            if (!ModelState.IsValid) return "Invalid model";
-            _db.Entry(product).State = EntityState.Modified;
-            _db.SaveChanges();
-            return "Updated successfully";
-        }
+      
 
         public JsonResult DeleteProduct(int OrderNo)
         {

@@ -4,12 +4,15 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ProductOrder.Models;
+using System.Web.Script.Serialization;
+using System.Data.Entity;
 
 namespace ProductOrder.Controllers
 {
     public class ProductOrderController : Controller
     {
         static readonly IProductRepository repository = new ProductRepository();
+        private readonly POentity _db = new POentity();
         // GET: ProductOrder
         public ActionResult ProductOrder()
         {
@@ -27,6 +30,7 @@ namespace ProductOrder.Controllers
             return Json(item, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
         public JsonResult EditProduct(int OrderNo, ProductOrderList product)
         {
             product.Order_No = OrderNo;
@@ -36,6 +40,15 @@ namespace ProductOrder.Controllers
             }
 
             return Json(null);
+        }
+
+        [HttpPost]
+        public string UpdatePO(ProductOrderList product)
+        {
+            if (!ModelState.IsValid) return "Invalid model";
+            _db.Entry(product).State = EntityState.Modified;
+            _db.SaveChanges();
+            return "Updated successfully";
         }
 
         public JsonResult DeleteProduct(int OrderNo)

@@ -64,8 +64,8 @@ function ProductOrderViewModel() {
         self.selected(item);
     }
 
-    //Reload page
-    self.ReloadPage = function () { location.reload() }
+    //Go to main page
+    self.GoToMain = function () { window.location.href = '/ProductOrder/ProductOrder';  }
 
 
     //Edit PO detail
@@ -80,7 +80,7 @@ function ProductOrderViewModel() {
                 self.Products(data); //Put the response in ObservableArray
                 self.Product(null);
                 alert("Record Updated Successfully");
-                self.ReloadPage();
+                self.GoToMain();
             },
             error: function (err) {
                 alert(err.status + " - " + err.statusText);

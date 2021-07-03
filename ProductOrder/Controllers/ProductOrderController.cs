@@ -19,6 +19,11 @@ namespace ProductOrder.Controllers
             return View();
         }
 
+        public ActionResult EditPO()
+        {
+            return View();
+        }
+
         public JsonResult GetAllProducts()
         {
             return Json(repository.GetAll(), JsonRequestBehavior.AllowGet);
@@ -31,10 +36,10 @@ namespace ProductOrder.Controllers
         }
 
         [HttpPost]
-        public JsonResult EditProduct( ProductOrderList product)
+        public JsonResult EditProduct( int OrderNo , ProductOrderList product)
         {
             
-            //product.Order_No = OrderNo;
+            product.Order_No = OrderNo;
             if (repository.Update(product))
             {
                 return Json(repository.GetAll(), JsonRequestBehavior.AllowGet);
@@ -63,6 +68,15 @@ namespace ProductOrder.Controllers
             {
                 List<ProductOrderList> POList = db.ProductOrderLists.ToList<ProductOrderList>();
                 return Json(new { data = POList }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult GetPOheadData()
+        {
+            using (POentity db = new POentity())
+            {
+                List<ProductOrderLine> POLine = db.ProductOrderLines.ToList<ProductOrderLine>();
+                return Json(new { data = POLine }, JsonRequestBehavior.AllowGet);
             }
         }
 

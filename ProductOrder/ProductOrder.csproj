@@ -153,6 +153,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>POlist.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductOrderLine.cs">
+      <DependentUpon>POlist.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProductOrderList.cs">
       <DependentUpon>POlist.tt</DependentUpon>
     </Compile>

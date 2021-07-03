@@ -5,6 +5,18 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="POmodel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ProductOrderLine">
+          <Key>
+            <PropertyRef Name="Part_Number" />
+          </Key>
+          <Property Name="Part_Number" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Part_Des" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Manufacturer" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Qty_Order" Type="int" Nullable="false" />
+          <Property Name="Buy_Price" Type="money" Nullable="false" />
+          <Property Name="Order_Date" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Memo" Type="nvarchar" MaxLength="150" />
+        </EntityType>
         <EntityType Name="ProductOrderList">
           <Key>
             <PropertyRef Name="Order_No" />
@@ -22,6 +34,7 @@
           <Property Name="Post_Code" Type="nchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityContainer Name="POmodelStoreContainer">
+          <EntitySet Name="ProductOrderLine" EntityType="Self.ProductOrderLine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductOrderList" EntityType="Self.ProductOrderList" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -46,7 +59,20 @@
         </EntityType>
         <EntityContainer Name="POentity" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="ProductOrderLists" EntityType="Self.ProductOrderList" />
+          <EntitySet Name="ProductOrderLines" EntityType="POmodel.ProductOrderLine" />
         </EntityContainer>
+        <EntityType Name="ProductOrderLine">
+          <Key>
+            <PropertyRef Name="Part_Number" />
+          </Key>
+          <Property Name="Part_Number" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Part_Des" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Manufacturer" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Qty_Order" Type="Int32" Nullable="false" />
+          <Property Name="Buy_Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Order_Date" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Memo" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -67,6 +93,19 @@
                 <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="Post_Code" ColumnName="Post_Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductOrderLines">
+            <EntityTypeMapping TypeName="POmodel.ProductOrderLine">
+              <MappingFragment StoreEntitySet="ProductOrderLine">
+                <ScalarProperty Name="Memo" ColumnName="Memo" />
+                <ScalarProperty Name="Order_Date" ColumnName="Order_Date" />
+                <ScalarProperty Name="Buy_Price" ColumnName="Buy_Price" />
+                <ScalarProperty Name="Qty_Order" ColumnName="Qty_Order" />
+                <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+                <ScalarProperty Name="Part_Des" ColumnName="Part_Des" />
+                <ScalarProperty Name="Part_Number" ColumnName="Part_Number" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

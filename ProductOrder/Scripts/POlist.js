@@ -8,7 +8,7 @@ function ProductOrderViewModel() {
     self.Supplier = ko.observable("");
     self.Stock_Site = ko.observable("");
     self.Stock_Name = ko.observable("");
-    self.Oder_Date = ko.observable();
+    self.Order_Date = ko.observable();
     self.Last_Update = ko.observable();
     self.Note = ko.observable();
     self.Supplier_name = ko.observable();
@@ -30,19 +30,40 @@ function ProductOrderViewModel() {
         self.Post_Code = ko.observable(Post_Code);
     };
 
+    // Contains the list of products order head
     self.Product = ko.observable();
-    self.Products = ko.observableArray(); // Contains the list of products
-    self.Productss = ko.observableArray();
+    self.Products = ko.observableArray(); 
     self.items = ko.observableArray();
 
-    var testObj = {
-        OrderNo : 1, product : self.Product
+    // Contains the list of products order Line
+    self.PO_Line = ko.observable();
+    self.PO_Lines = ko.observableArray();
+    self.POitems = ko.observableArray();
 
-    } 
+    self.Part_Number = ko.observable();
+    self.Part_Des = ko.observable();
+    self.Manufacturer = ko.observable();
+    self.Qty_Order = ko.observable();
+    self.Buy_Price = ko.observable();
+    self.Order_Date = ko.observable();
+    self.Memo = ko.observable();
+
+    var PO_Line = function (Part_Number,Part_Des,Manufacturer,Qty_Order,Buy_Price,Order_Date,Memo)
+    {
+        self.Part_Number = ko.observable(Part_Number);
+        self.Part_Des = ko.observable(Part_Des);
+        self.Manufacturer = ko.observable(Manufacturer);
+        self.Qty_Order = ko.observable(Qty_Order);
+        self.Buy_Price = ko.observable(Buy_Price);
+        self.Order_Date = ko.observable(Order_Date);
+        self.Memo = ko.observable(Memo);
+        self.Total_Price = ko.computed(    function () { }     )
+    }
+
+
 
     //Show PO list
     $.ajax({
-        //url: '@Url.Action("GetData", "ProductOrder" )',
         async: false,
         url: MyAppUrlSettings.MyUsefulUrl,
         cache: false,
@@ -53,16 +74,26 @@ function ProductOrderViewModel() {
         success: function (data) {
 
             self.Products(data);
-            //self.items(data)
+            self.items(data)
 
         }
     });
 
     //Pick selected data in a row when clicked
-    self.selected = ko.observable(self.Products().data[0])
+    self.selected = ko.observable(self.items().data[0])
     self.select = function (item) {
         self.selected(item);
+        window.open('/ProductOrder/EditPO?Order_No=' + self.selected().Order_No  + '  ').focus();
+        //console.log(self.selected())
     }
+
+    //Redirect to PO detail when clicked in main page
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const OrderNo = urlParams.get('Order_No')
+    //console.log(OrderNo);
+    self.getSeletedPO = ko.observable(self.items().data[OrderNo-1])
+
 
     //Go to main page
     self.GoToMain = function () { window.location.href = '/ProductOrder/ProductOrder';  }
@@ -88,8 +119,35 @@ function ProductOrderViewModel() {
         });
     };
 
+    //Show PO line
+    $.ajax({
+        async: false,
+        url: POhead_URL.MyPOheadURL,
+        cache: false,
+        type: 'GET',
+        datatype: "json",
+        contentType: 'application/json; charset=utf-8',
+        data: {},
+        success: function (data) {
 
-    console.log(self.selected())
+            self.PO_Lines(data);
+            self.POitems(data)
+            for (var i = 0; i < self.PO_Lines().length; i++)
+            {
+                if (self.PO_Lines().data[i].Manufacturer == self.selected().Supplier)
+                {
+                    
+                }
+            }
+            console.log(self.POitems())
+        }
+    });
+   
+
+    self.RemovePOline = function ()
+    {
+
+    }
 }
 
 

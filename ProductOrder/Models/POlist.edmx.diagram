@@ -6,6 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="37d1df359ab14c1fb5804615f5ea6fc5" Name="Diagram1">
         <EntityTypeShape EntityType="POmodel.ProductOrderList" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POmodel.ProductOrderLine" Width="1.5" PointX="3.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

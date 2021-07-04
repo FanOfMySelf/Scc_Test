@@ -83,7 +83,7 @@ function ProductOrderViewModel() {
     self.selected = ko.observable(self.items().data[0])
     self.select = function (item) {
         self.selected(item);
-        window.open('/ProductOrder/EditPO?Order_No=' + self.selected().Order_No  + '  ').focus();
+        window.location.href = ('/ProductOrder/EditPO?Order_No=' + self.selected().Order_No + '&Supplier=' + self.selected().Supplier +' ');
         //console.log(self.selected())
     }
 
@@ -91,7 +91,6 @@ function ProductOrderViewModel() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const OrderNo = urlParams.get('Order_No')
-    //console.log(OrderNo);
     self.getSeletedPO = ko.observable(self.items().data[OrderNo-1])
 
 
@@ -132,17 +131,26 @@ function ProductOrderViewModel() {
 
             self.PO_Lines(data);
             self.POitems(data)
-            for (var i = 0; i < self.PO_Lines().length; i++)
-            {
-                if (self.PO_Lines().data[i].Manufacturer == self.selected().Supplier)
-                {
-                    
-                }
-            }
-            console.log(self.POitems())
+
+            
         }
     });
-   
+
+    //filter Supplier and Manufacturer
+    const Supplier = urlParams.get('Supplier')
+    for (var i = self.PO_Lines().data.length-1; i >= 0; i--) {
+        if (self.PO_Lines().data[i].Manufacturer != Supplier) {
+                      
+            self.POitems().data.splice(i, 1)
+            
+        }
+      
+    }
+  
+
+
+
+
 
     self.RemovePOline = function ()
     {

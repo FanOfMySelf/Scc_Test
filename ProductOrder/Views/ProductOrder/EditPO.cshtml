@@ -1,7 +1,7 @@
 ﻿
 <!DOCTYPE html>
-<html onload="myfunction()">
-<body data-bind="onload: $root.myfunction()">
+<html>
+<body>
     <script>
     var MyAppUrlSettings = {
         MyUsefulUrl: '@Url.Action("GetData", "ProductOrder")'
@@ -13,6 +13,7 @@
         var POhead_URL = {
             MyPOheadURL:'@Url.Action("GetPOheadData", "ProductOrder")'
         }
+        
     </script>
 
     <h1>PRODUCTS ORDERS LIST</h1>

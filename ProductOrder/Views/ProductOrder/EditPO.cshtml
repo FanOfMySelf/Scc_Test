@@ -14,7 +14,18 @@
                 color: white;
                 text-align: center
             }
+            #Navbar h2 {
+                display: inline-block;
+                text-align: center;
+                color: dodgerblue;
+                text-decoration: underline;
+            }
+
+            
+           
         </style>
+
+
     </head>
 
 <body>
@@ -32,24 +43,44 @@
         
     </script>
 
-    <h1>PRODUCTS ORDERS LIST</h1>
-    <h2>Purchase order <span data-bind="text: getSeletedPO ().Order_No"></span></h2>
-    <p>Supplier: <span><input type="text" data-bind="value:getSeletedPO() .Supplier ,enable:false " /></span> </p>
-    <p>Stock Site: <span><input type="text" data-bind="value:getSeletedPO() .Stock_Site ,enable:false " /></span> </p>
-    <p>Order Date: <span><input type="text" data-bind="value: getSeletedPO() .Order_Date ,enable:false " /></span> </p>
-    <p>Note: <input type="text" data-bind="textInput: getSeletedPO() .Note  " /></p>
-    <p>Supplier name: <span><input type="text" data-bind="value: getSeletedPO() .Supplier_name ,enable:false " /></span> </p>
-    <p>Stock Name: <span><input type="text" data-bind="value: getSeletedPO() .Stock_Name  " /></span> </p>
-    <p>Address<span style="color: red">*: </span>  <span><input type="text" data-bind="value: getSeletedPO() .Address  " /></span> </p>
-    <p>Country<span style="color: red">*: </span> <span><input type="text" data-bind="value: getSeletedPO() .Country  " /></span> </p>
-    <p>Postcode<span style="color: red">*: </span> <span><input type="text" data-bind="value: getSeletedPO() .Post_Code  " /></span> </p>
-    @*<button data-bind="click: $root.EditPO">Save</button> <span><button data-bind="click: GoToMain">Cancel</button></span>*@
+    <div id="Navbar">
+        <h2>Purchase order <span data-bind="text: getSeletedPO ().Order_No"></span></h2>
+    </div>
+    <h1></h1>
+    <div class="container" style="border:1px solid #cecece;">
+        <div class="row">
+            <h1></h1>
+            <div class="col-sm-4">
+                <p>Supplier:<span style="margin-left: 50px;"><input type="text" data-bind="value:getSeletedPO() .Supplier ,enable:false " /></span> </p>
+                <h1></h1>
+                <p>Stock Site:<span style="margin-left: 38px;"><input type="text" data-bind="value:getSeletedPO() .Stock_Site ,enable:false " /></span> </p>
+                <h1></h1>
+                <p>Order Date:<span style="margin-left: 30px;"><input type="text" data-bind="value: getSeletedPO() .Order_Date ,enable:false " /></span> </p>
+                <h1></h1>
+                <p>Note: <span style="margin-left: 30px;"><textarea data-bind="textInput: getSeletedPO() .Note " rows="4" cols="50"> </textarea> </span>
+            </div>
 
+            <div class="col-sm-2"></div>
+           
+            <div class="col-sm-4">
+                <p>Supplier name:<span style="margin-left: 22px;"><input type="text" data-bind="value: getSeletedPO() .Supplier_name ,enable:false " /></span> </p>
+                <h1></h1>
+                <p>Stock Name:<span  style="margin-left: 38px;"><input type="text" data-bind="value: getSeletedPO() .Stock_Name  " /></span> </p>
+                <h1></h1>
+                <p>Address<span style="color: red";>*: </span> <textarea  data-bind="tvalue: getSeletedPO() .Address  " rows="4" cols="50"> </textarea>
+                <h1></h1>
+                <p>Country<span style="color: red">*: </span> <span  style="margin-left: 48px;"><input type="text" data-bind="value: getSeletedPO() .Country  " /></span> </p>
+                <h1></h1>
+                <p>Postcode<span style="color: red">*: </span> <span  style="margin-left: 38px;"><input type="text" data-bind="value: getSeletedPO() .Post_Code  " /></span> </p>
+            </div>
+        </div>
+        <h1></h1>
+        
+    </div>
 
-
+    <h1></h1>
 
     <div>
-
         <table style="width:100%">
             <thead><tr><th>Part_Number</th><th>Part_Des</th><th>Manufacturer</th><th>Qty_Order</th><th>Order_Date</th><th>Memo</th><th>Total Price ($)</th><th></th></tr></thead>
             <tbody data-bind="foreach: PO_Lines">

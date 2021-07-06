@@ -146,10 +146,21 @@ function ProductOrderViewModel() {
         }
       
     }
-  
 
+    self.validate1 = ko.observable(localStorage.getItem('validate1'));
+   
 
+    self.checkEmpty = function ()
+    {
+       
 
+        if (self.validate1() != "" || self.validate1() != " ")
+        {
+            alert("asd")
+        }
+    }
+    
+   
 
 
     self.RemovePOline = function ()

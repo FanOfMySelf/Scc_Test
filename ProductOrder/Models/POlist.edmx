@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="POmodel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="POmodel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ProductOrderLine">
           <Key>
             <PropertyRef Name="Part_Number" />
@@ -16,6 +16,7 @@
           <Property Name="Buy_Price" Type="money" Nullable="false" />
           <Property Name="Order_Date" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Memo" Type="nvarchar" MaxLength="150" />
+          <Property Name="Order_No" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductOrderList">
           <Key>
@@ -33,14 +34,45 @@
           <Property Name="Country" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Post_Code" Type="nchar" MaxLength="10" Nullable="false" />
         </EntityType>
+        <Association Name="FK_ProductOrderLine_ProductOrderList">
+          <End Role="ProductOrderList" Type="Self.ProductOrderList" Multiplicity="1" />
+          <End Role="ProductOrderLine" Type="Self.ProductOrderLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductOrderList">
+              <PropertyRef Name="Order_No" />
+            </Principal>
+            <Dependent Role="ProductOrderLine">
+              <PropertyRef Name="Order_No" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="POmodelStoreContainer">
           <EntitySet Name="ProductOrderLine" EntityType="Self.ProductOrderLine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductOrderList" EntityType="Self.ProductOrderList" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ProductOrderLine_ProductOrderList" Association="Self.FK_ProductOrderLine_ProductOrderList">
+            <End Role="ProductOrderList" EntitySet="ProductOrderList" />
+            <End Role="ProductOrderLine" EntitySet="ProductOrderLine" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="POmodel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ProductOrderLine">
+          <Key>
+            <PropertyRef Name="Part_Number" />
+          </Key>
+          <Property Name="Part_Number" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Part_Des" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Manufacturer" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Qty_Order" Type="Int32" Nullable="false" />
+          <Property Name="Buy_Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Order_Date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Memo" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Order_No" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ProductOrderList" Relationship="Self.FK_ProductOrderLine_ProductOrderList" FromRole="ProductOrderLine" ToRole="ProductOrderList" />
+        </EntityType>
         <EntityType Name="ProductOrderList">
           <Key>
             <PropertyRef Name="Order_No" />
@@ -51,61 +83,67 @@
           <Property Name="Stock_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Order_Date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Last_Update" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Supplier_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Note" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="Country" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Post_Code" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Supplier_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductOrderLines" Relationship="Self.FK_ProductOrderLine_ProductOrderList" FromRole="ProductOrderList" ToRole="ProductOrderLine" />
         </EntityType>
+        <Association Name="FK_ProductOrderLine_ProductOrderList">
+          <End Role="ProductOrderList" Type="Self.ProductOrderList" Multiplicity="1" />
+          <End Role="ProductOrderLine" Type="Self.ProductOrderLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductOrderList">
+              <PropertyRef Name="Order_No" />
+            </Principal>
+            <Dependent Role="ProductOrderLine">
+              <PropertyRef Name="Order_No" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="POentity" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ProductOrderLines" EntityType="Self.ProductOrderLine" />
           <EntitySet Name="ProductOrderLists" EntityType="Self.ProductOrderList" />
-          <EntitySet Name="ProductOrderLines" EntityType="POmodel.ProductOrderLine" />
+          <AssociationSet Name="FK_ProductOrderLine_ProductOrderList" Association="Self.FK_ProductOrderLine_ProductOrderList">
+            <End Role="ProductOrderList" EntitySet="ProductOrderLists" />
+            <End Role="ProductOrderLine" EntitySet="ProductOrderLines" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="ProductOrderLine">
-          <Key>
-            <PropertyRef Name="Part_Number" />
-          </Key>
-          <Property Name="Part_Number" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Part_Des" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Manufacturer" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Qty_Order" Type="Int32" Nullable="false" />
-          <Property Name="Buy_Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="Order_Date" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Memo" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="POmodelStoreContainer" CdmEntityContainer="POentity">
+          <EntitySetMapping Name="ProductOrderLines">
+            <EntityTypeMapping TypeName="POmodel.ProductOrderLine">
+              <MappingFragment StoreEntitySet="ProductOrderLine">
+                <ScalarProperty Name="Part_Number" ColumnName="Part_Number" />
+                <ScalarProperty Name="Part_Des" ColumnName="Part_Des" />
+                <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+                <ScalarProperty Name="Qty_Order" ColumnName="Qty_Order" />
+                <ScalarProperty Name="Buy_Price" ColumnName="Buy_Price" />
+                <ScalarProperty Name="Order_Date" ColumnName="Order_Date" />
+                <ScalarProperty Name="Memo" ColumnName="Memo" />
+                <ScalarProperty Name="Order_No" ColumnName="Order_No" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ProductOrderLists">
             <EntityTypeMapping TypeName="POmodel.ProductOrderList">
               <MappingFragment StoreEntitySet="ProductOrderList">
-                <ScalarProperty Name="Supplier_name" ColumnName="Supplier_name" />
                 <ScalarProperty Name="Order_No" ColumnName="Order_No" />
                 <ScalarProperty Name="Supplier" ColumnName="Supplier" />
                 <ScalarProperty Name="Stock_Site" ColumnName="Stock_Site" />
                 <ScalarProperty Name="Stock_Name" ColumnName="Stock_Name" />
                 <ScalarProperty Name="Order_Date" ColumnName="Order_Date" />
                 <ScalarProperty Name="Last_Update" ColumnName="Last_Update" />
+                <ScalarProperty Name="Supplier_name" ColumnName="Supplier_name" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="Post_Code" ColumnName="Post_Code" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProductOrderLines">
-            <EntityTypeMapping TypeName="POmodel.ProductOrderLine">
-              <MappingFragment StoreEntitySet="ProductOrderLine">
-                <ScalarProperty Name="Memo" ColumnName="Memo" />
-                <ScalarProperty Name="Order_Date" ColumnName="Order_Date" />
-                <ScalarProperty Name="Buy_Price" ColumnName="Buy_Price" />
-                <ScalarProperty Name="Qty_Order" ColumnName="Qty_Order" />
-                <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
-                <ScalarProperty Name="Part_Des" ColumnName="Part_Des" />
-                <ScalarProperty Name="Part_Number" ColumnName="Part_Number" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

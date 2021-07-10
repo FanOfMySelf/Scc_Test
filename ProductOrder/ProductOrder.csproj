@@ -126,9 +126,15 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery.js" />
+    <Content Include="Scripts\knockout-3.4.0.debug.js" />
+    <Content Include="Scripts\knockout-3.4.0.js" />
     <Content Include="Scripts\knockout.min.js" />
+    <Content Include="Scripts\knockout.validation.js" />
+    <Content Include="Scripts\knockout.validation.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\POlist.js" />
+    <Content Include="Scripts\TEST.js" />
+    <Content Include="Scripts\test2.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +179,8 @@
     <Content Include="Views\ProductOrder\ProductOrder.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\ProductOrder\EditPO.cshtml" />
+    <Content Include="Scripts\knockout.validation.min.js.map" />
+    <Content Include="Views\ProductOrder\Test.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

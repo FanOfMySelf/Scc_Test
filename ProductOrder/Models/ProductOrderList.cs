@@ -14,16 +14,25 @@ namespace ProductOrder.Models
     
     public partial class ProductOrderList
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ProductOrderList()
+        {
+            this.ProductOrderLines = new HashSet<ProductOrderLine>();
+        }
+    
         public int Order_No { get; set; }
         public string Supplier { get; set; }
         public string Stock_Site { get; set; }
         public string Stock_Name { get; set; }
         public string Order_Date { get; set; }
         public string Last_Update { get; set; }
+        public string Supplier_name { get; set; }
         public string Address { get; set; }
         public string Note { get; set; }
         public string Country { get; set; }
         public string Post_Code { get; set; }
-        public string Supplier_name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductOrderLine> ProductOrderLines { get; set; }
     }
 }

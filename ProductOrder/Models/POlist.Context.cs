@@ -25,7 +25,7 @@ namespace ProductOrder.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<ProductOrderList> ProductOrderLists { get; set; }
         public virtual DbSet<ProductOrderLine> ProductOrderLines { get; set; }
+        public virtual DbSet<ProductOrderList> ProductOrderLists { get; set; }
     }
 }

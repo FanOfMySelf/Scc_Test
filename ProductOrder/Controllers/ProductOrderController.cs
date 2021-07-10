@@ -24,6 +24,11 @@ namespace ProductOrder.Controllers
             return View();
         }
 
+        public ActionResult Test()
+        {
+            return View();
+        }
+
         public JsonResult GetAllProducts()
         {
             return Json(repository.GetAll(), JsonRequestBehavior.AllowGet);
@@ -35,20 +40,16 @@ namespace ProductOrder.Controllers
             return Json(item, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        public JsonResult EditProduct( int OrderNo , ProductOrderList product)
-        {
-            
-            product.Order_No = OrderNo;
-            if (repository.Update(product))
-            {
-                return Json(repository.GetAll(), JsonRequestBehavior.AllowGet);
-            }
-
-            return Json(null);
-        }
-
       
+
+        [HttpPost]
+        public string Update(ProductOrderList polist)
+        {
+            if (!ModelState.IsValid) return "Invalid model";
+            _db.Entry(polist).State = EntityState.Modified;
+            _db.SaveChanges();
+            return "Updated successfully";
+        }
 
         public JsonResult DeleteProduct(int OrderNo)
         {

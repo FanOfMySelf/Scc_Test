@@ -34,7 +34,8 @@ function ProductOrderViewModel() {
     // Contains the list of products order Line
     self.PO_Line = ko.observable();
     self.PO_Lines = ko.observableArray();
-   
+
+    
 
     self.Part_Number = ko.observable();
     self.Part_Des = ko.observable();

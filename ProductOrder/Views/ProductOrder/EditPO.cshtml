@@ -66,8 +66,7 @@
     </script>
 
     <script id="customMessageTemplate" type="text/html">
-        <!--
-        -->
+     
         <em class="customMessage" data-bind="validationMessage: field"></em>
     </script>
 
@@ -131,13 +130,13 @@
         <div>
             <table style="width:100%">
                 <thead><tr><th>Part_Number</th><th>Part_Des</th><th>Manufacturer</th><th>Qty_Order</th><th>Order_Date</th><th>Memo</th><th>Total Price (£)</th><th></th></tr></thead>
-                <tbody data-bind="foreach: POitems">
+                <tbody data-bind="foreach: POitems ">
                     <tr>
                         <td data-bind="text: Part_Number"></td>
                         <td data-bind="text: Part_Des"></td>
                         <td data-bind="text: Manufacturer"></td>
-                        <td class="row"><input data-bind="value: Qty_Order  " /> </td>
-                        <td><input type="text" data-bind="value: Order_Date  " /></td>
+                        <td class="row"><input type="number" data-bind="value: Qty_Order" /> </td>
+                        <td><input type="date" data-bind="value: Order_Date  " /></td>
                         <td> <input type="text" data-bind="value: Memo  " /></td>
                         <td data-bind="text: Buy_Price "></td>
                         <td> <b style="color:red ; font-size:20px " href="#" data-bind="click:$root.RemovePOline ">ⓧ</b></td>
@@ -149,7 +148,6 @@
     <div>
         <label>Purchase order price (£) </label>
         <input data-bind="value:PO_price ,enable:false" />
-
     </div>
     @*<div>
         <a href="#" data-bind="click: $root.AddPOlines">Add Purchase order line</a>
@@ -159,7 +157,7 @@
         <button type="button" data-bind='enable: getSeletedPO().Cancel != true,click: submit'>Submit</button>
         &nbsp;
     </fieldset>
-    <button id="check" data-bind="enable: getSeletedPO().Cancel != true,click: EditPO">Save</button> <span><button data-bind="enable: getSeletedPO().Cancel != true,click: $root.CancelPO">Cancel PO</button></span>
+    <button id="check" data-bind="enable: getSeletedPO().Cancel != true,click: EditPOline">Save</button> <span><button data-bind="enable: getSeletedPO().Cancel != true,click: $root.CancelPO">Cancel PO</button></span>
 
     
 

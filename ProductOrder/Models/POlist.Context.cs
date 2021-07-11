@@ -27,5 +27,6 @@ namespace ProductOrder.Models
     
         public virtual DbSet<ProductOrderLine> ProductOrderLines { get; set; }
         public virtual DbSet<ProductOrderList> ProductOrderLists { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     }
 }

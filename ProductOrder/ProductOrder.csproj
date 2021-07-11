@@ -166,6 +166,9 @@
       <DependentUpon>POlist.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductRepository.cs" />
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>POlist.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

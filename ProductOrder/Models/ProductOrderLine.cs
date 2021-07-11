@@ -22,7 +22,5 @@ namespace ProductOrder.Models
         public string Order_Date { get; set; }
         public string Memo { get; set; }
         public int Order_No { get; set; }
-    
-        public virtual ProductOrderList ProductOrderList { get; set; }
     }
 }

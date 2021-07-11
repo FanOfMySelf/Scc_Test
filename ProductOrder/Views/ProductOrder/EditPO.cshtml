@@ -39,6 +39,7 @@
         .customMessage {
             color: #FFA500;
         }
+        
     </style>
 
 
@@ -59,6 +60,9 @@
         MyPOheadURL:'@Url.Action("GetPOheadData", "ProductOrder")'
     }
 
+    var Edit_PO_line = {
+        EditPOline:'@Url.Action("UpdatePOline", "ProductOrder")'
+    }
     </script>
 
     <script id="customMessageTemplate" type="text/html">
@@ -72,43 +76,46 @@
             User: <strong data-bind="text: ProductOrderViewModel.errors().length"></strong> errors
         </legend>
         <div id="Navbar">
-            <h2>Purchase order <span data-bind="text: selected ().Order_No"></span></h2>
+            <h2>Purchase order <span data-bind="text: getSeletedPO ().Order_No"></span></h2>
         </div>
+
+        <h1 id="cancelPO" data-bind="visible:getSeletedPO().Cancel == true" style="color:red">
+            Warning: This PO cannot be modified because already cancelled.
+        </h1>
         <h1></h1>
         <div class="container" style="border:1px solid #cecece;">
             <div class="row">
                 <h1></h1>
                 <div class="col-sm-4">
-                    <p>Supplier:<span style="margin-left: 50px;"><input type="text" data-bind="value:selected() .Supplier ,enable:false " /></span> </p>
+                    <p>Supplier:<span style="margin-left: 50px;"><input type="text" data-bind="value:getSeletedPO() .Supplier ,enable:false " /></span> </p>
                     <h1></h1>
-                    <p>Stock Site:<span style="margin-left: 38px;"><input type="text" data-bind="value:selected() .Stock_Site ,enable:false " /></span> </p>
+                    <p>Stock Site:<span style="margin-left: 38px;"><input type="text" data-bind="value:getSeletedPO() .Stock_Site ,enable:false " /></span> </p>
                     <h1></h1>
-                    <p>Order Date:<span style="margin-left: 30px;"><input type="text" data-bind="value: selected() .Order_Date  " /></span> </p>
+                    <p>Order Date:<span style="margin-left: 30px;"><input type="date" data-bind="value: getSeletedPO() .Order_Date ,enable:getSeletedPO().Cancel != true " /></span> </p>
                     <h1></h1>
-                    <p>Note: <span style="margin-left: 30px;"><textarea data-bind="textInput: selected() .Note " rows="4" cols="50"> </textarea> </span>
+                    <p>Note: <span style="margin-left: 30px;"><textarea data-bind="textInput: getSeletedPO() .Note,enable:getSeletedPO().Cancel != true " rows="4" cols="50"> </textarea> </span>
                 </div>
 
                 <div class="col-sm-2"></div>
 
-                <div class="col-sm-4">
-                    <p>Supplier name:<span style="margin-left: 22px;"><input type="text" data-bind="value: selected() .Supplier_name ,enable:false " /></span> </p>
+                <div class="col-sm-5">
+                    <div class="row">Supplier name:<span style="margin-left: 10px;"><input type="text" data-bind="value: getSeletedPO() .Supplier_name ,enable:false " /></span> </div>
                     <h1></h1>
-                    <p>Stock Name:<span style="margin-left: 38px;"><input type="text" data-bind="value: selected() .Stock_Name  " /></span> </p>
+                    <div class="row">Stock Name:<span style="margin-left: 22px;"><input type="text" data-bind="value: getSeletedPO() .Stock_Name ,enable:getSeletedPO().Cancel != true " /></span> </div>
                     <h1></h1>
                     <div class="row">
-                        Address<span style="color: red" ;>*: </span> <textarea data-bind="value: selected().Address" rows="4" cols="50"> </textarea>
+                        Address<span style="color: red" ;>*: </span><span style="margin-left: 35px;"> <textarea data-bind="value: getSeletedPO().Address,enable:getSeletedPO().Cancel != true" rows="4" cols="30"> </textarea> </span>
                         <h1></h1>
                     </div>
 
                     <div class="row">
-                        <label>Country:</label>
-                        <input data-bind="value: selected().Country" />
+                        Country<span style="color: red">*: </span> <span style="margin-left: 38px;"><input type="text" data-bind="value: getSeletedPO().Country ,enable:getSeletedPO().Cancel != true " /></span>
                     </div>
 
                     <h1></h1>
 
                     <div class="row">
-                        Postcode<span style="color: red">*: </span> <span style="margin-left: 38px;"><input type="text" data-bind="value: selected().Post_Code  " /></span>
+                        Postcode<span style="color: red">*: </span> <span style="margin-left: 28px;"><input type="text" data-bind="value: getSeletedPO().Post_Code ,enable:getSeletedPO().Cancel != true " /></span>
                     </div>
 
                 </div>
@@ -139,49 +146,38 @@
             </table>
         </div>
     </fieldset>
-        <div>
-            <label>Purchase order price (£) </label>
-            <input data-bind="value:PO_price() ,enable:false" />
+    <div>
+        <label>Purchase order price (£) </label>
+        <input data-bind="value:PO_price ,enable:false" />
 
-        </div>
-        <div>
-            <a href="#" data-bind="click: $root.AddPOlines">Add Purchase order line</a>
-        </div>
-        <button id="check" data-bind="click: EditPO">Save</button> <span><button data-bind="click: GoToMain">Cancel</button></span>
+    </div>
+    @*<div>
+        <a href="#" data-bind="click: $root.AddPOlines">Add Purchase order line</a>
+    </div>*@
 
+    <fieldset>
+        <button type="button" data-bind='enable: getSeletedPO().Cancel != true,click: submit'>Submit</button>
+        &nbsp;
+    </fieldset>
+    <button id="check" data-bind="enable: getSeletedPO().Cancel != true,click: EditPO">Save</button> <span><button data-bind="enable: getSeletedPO().Cancel != true,click: $root.CancelPO">Cancel PO</button></span>
 
-
-        @*<fieldset>
-                <legend class="well">
-                    User: <strong data-bind="text: ProductOrderViewModel.errors().length"></strong> errors
-                </legend>
-
-                <div class="row">
-                    <label>Country:</label>
-                    <input id="test" data-bind="value: validate_Country" required="required" />
-                </div>
-            </fieldset>*@
-
-        <fieldset>
-            <button type="button" data-bind='click: submit'>Submit</button>
-            &nbsp;
-        </fieldset>
-
-        <p id="demo"></p>
+    
 
 
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <link rel="stylesheet" href="/resources/demos/style.css">
-        <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <script src="~/Scripts/jquery.js"></script>
-        <script src="~/Scripts/knockout.min.js"></script>
-        <script src="~/Scripts/knockout.validation.js"></script>
-        <script src="~/Scripts/POlist.js"></script>
+    <p id="demo"></p>
 
 
-        <div>
-            @Html.ActionLink("Back to PO list", "ProductOrder")
-        </div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/knockout.min.js"></script>
+    <script src="~/Scripts/knockout.validation.js"></script>
+    <script src="~/Scripts/POlist.js"></script>
+
+
+    <div>
+        @Html.ActionLink("Back to PO list", "ProductOrder")
+    </div>
 </body>
 </html>

@@ -51,6 +51,15 @@ namespace ProductOrder.Controllers
             return "Updated successfully";
         }
 
+        [HttpPost]
+        public string UpdatePOline(ProductOrderLine poline)
+        {
+            if (!ModelState.IsValid) return "Invalid model";
+            _db.Entry(poline).State = EntityState.Modified;
+            _db.SaveChanges();
+            return "Updated successfully";
+        }
+
         public JsonResult DeleteProduct(int OrderNo)
         {
 

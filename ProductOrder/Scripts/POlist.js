@@ -23,11 +23,8 @@ function ProductOrderViewModel() {
     self.Supplier_name = ko.observable();
     self.Address = ko.observable()
     self.Country = ko.observable()
-    self.Post_Code = ko.observable().extend({ required: true, minLength: 2, maxLength: 10 });
-    
-    
-   
-
+    self.Post_Code = ko.observable()
+    self.Cancel = ko.observable(false)
    
     // Contains the list of products order head
     self.Product = ko.observable();
@@ -42,7 +39,7 @@ function ProductOrderViewModel() {
     self.Part_Number = ko.observable();
     self.Part_Des = ko.observable();
     self.Manufacturer = ko.observable();
-    self.Qty_Order = ko.observable().extend({ required: true, min: 0, max: 10 });;
+    self.Qty_Order = ko.observable();
     self.Buy_Price = ko.observable();
     self.Order_Date = ko.observable();
     self.Memo = ko.observable();
@@ -73,15 +70,8 @@ function ProductOrderViewModel() {
         self.Post_Code = ko.observable(Post_Code)
     };
 
-    self.submit = function () {
-        if (ProductOrderViewModel.errors().length === 0) {
-            alert('Thank you.');
-        }
-        else {
-            alert('Please check your submission.');
-            ProductOrderViewModel.errors.showAllMessages();
-        }
-    };
+   
+
 
     //Show PO list
     $.ajax({
@@ -93,19 +83,18 @@ function ProductOrderViewModel() {
         contentType: 'application/json; charset=utf-8',
         data: {},
         success: function (data) {
-            debugger
             Product = data;
-            self.Products(Product);
-            self.items(Product)
-            console.log(Product)
+            self.Products(data);
+            self.items(data)
+
         }
     });
-    console.log(self.Products())
+
     //Pick selected data in a row when clicked
     self.selected = ko.observable(self.items().data[0])
     self.select = function (item) {
         self.selected(item);
-        window.location.href = ('/ProductOrder/EditPO?Order_No=' + self.selected().Order_No + '&Supplier=' + self.selected().Supplier +' ');
+        window.location.href = ('/ProductOrder/EditPO?Order_No=' + self.selected().Order_No + '&Supplier=' + self.selected().Supplier);
         
     }
     //self.Products.push(new Product(self.selected().Order_No, self.selected().Supplier, self.selected().Stock_Site, self.selected().Stock_Name, self.selected().Order_Date, self.selected().Last_Update, self.selected().Note, self.selected().Supplier_name, self.validate_Address, self.validate_Country, self.validate_Postcode))
@@ -118,12 +107,24 @@ function ProductOrderViewModel() {
     //self.getSeletedPO_Country = ko.observable(self.items().data[OrderNo - 1].Country).extend({ required: true, minLength: 2, maxLength: 20 });
     
 
-    //Go to main page
-    self.GoToMain = function () { window.location.href = '/ProductOrder/ProductOrder';  }
+    self.CancelPO = function ()
+    {
+        var r = confirm("Do you want to Cancel this PO ?")
+        if (r == true) {
+            self.getSeletedPO().Cancel = 1;
+            alert("This PO is now canceled , Press Save to SAVE!!");
+            self.EditPO()
+            window.location.href = '/ProductOrder/ProductOrder';
+        }
+        
+        
 
-    self.validate_Country = ko.observable(self.selected().Country).extend({ required: true, minLength: 2, maxLength: 20 });
-    self.validate_Address = ko.observable(self.selected().Address).extend({ required: true, minLength: 2, maxLength: 100 });
-    self.validate_Postcode = ko.observable(self.selected().Post_Code).extend({ required: true, minLength: 2, maxLength: 10 });
+    }
+
+
+    //self.getSeletedPO().Post_Code = ko.observable(self.getSeletedPO().Post_Code).extend({ required: true, minLength: 2, maxLength: 10 });
+    //self.getSeletedPO().Address = ko.observable(self.getSeletedPO().Address).extend({ required: true, minLength: 2, maxLength: 100 });
+    //self.getSeletedPO().Country = ko.observable(self.getSeletedPO().Country).extend({ required: true, minLength: 2, maxLength: 50 });
 
   
     //Edit PO detail
@@ -134,7 +135,7 @@ function ProductOrderViewModel() {
             type: "POST",
             url: Edit_PO_URL.MyEdit_PO_URL,
             dataType: 'json',
-            data: ko.toJSON(self.selected()),
+            data: ko.toJSON(self.getSeletedPO()),
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
 
@@ -167,17 +168,38 @@ function ProductOrderViewModel() {
  
     //SEPERATE ITEMS AND DATA
     self.POitems = ko.observableArray(Array.from(self.PO_Lines().data))
-    console.log(self.POitems())
+ 
     //filter Supplier and Manufacturer
     const Supplier = urlParams.get('Supplier')
     for (var i = self.POitems().length - 1; i >= 0; i--) {
         if (self.POitems()[i].Manufacturer != Supplier && self.POitems()[i].Order_No != OrderNo) {
             self.PO_Lines().data.splice(i, 1)          
             self.POitems().splice(i, 1)  
-        }
-      
+        }    
     }
-    
+    for (var i = self.POitems().length - 1; i >= 0; i--) {
+        if ( self.POitems()[i].Order_No != OrderNo) {
+            self.PO_Lines().data.splice(i, 1)
+            self.POitems().splice(i, 1)
+        }
+    }
+
+    self.Cancel_Save_Visible = ko.observable(true)
+
+
+    self.submit = function () {
+        if (ProductOrderViewModel.errors().length == 0) {
+            self.Cancel_Save_Visible(true) 
+            alert('Thank you.');
+        }
+        else {
+            alert('Please fill all the fields.');
+            self.Cancel_Save_Visible(false) 
+            ProductOrderViewModel.errors.showAllMessages();
+        }
+    };
+
+
     self.RemovePOline = function (peo) {
         var index = self.POitems.indexOf(peo)
         if (index >= 0) { self.POitems.splice(index, 1) };     
@@ -186,7 +208,7 @@ function ProductOrderViewModel() {
 
     self.AddPOlines = function (a) {
         self.POitems = (Array.from(self.PO_Lines().data))
-        console.log(self.POitems)
+     
         
     };
 
@@ -194,10 +216,31 @@ function ProductOrderViewModel() {
         var total  = 0
         for (var i = 0; i < self.POitems().length; i++)
         {
-            total += (self.POitems()[i].Buy_Price * self.POitems()[i].Qty_Order);
+            total += (self.PO_Lines().data[i].Buy_Price * self.PO_Lines().data[i].Qty_Order);
         }
         return total;
-    });   
+    });
+
+    self.EditPOline = function () {
+
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: Edit_PO_line.EditPOline,
+            dataType: 'json',
+            data: ko.toJSON(self.POitems()),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+
+                alert("Record Updated Successfully");
+                self.GoToMain();
+            },
+            error: function (err) {
+                alert(err.status + " - " + err.statusText);
+            }
+        });
+    };
+
 };
 
 var viewModel = new ProductOrderViewModel();

@@ -172,6 +172,7 @@ function PO_EditViewModel()
            
             var r = confirm("You can't edit if you press OK")
             if (r == true) {
+                alert("Please press Save to update your Purchase order!")
                 self.Cancel_Save_Visible(true)
                 self.CancelAll(true)
                 

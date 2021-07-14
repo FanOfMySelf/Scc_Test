@@ -30,18 +30,16 @@ namespace ProductOrder.Controllers
             return View(_db.ProductOrderLists.ToList());
         }
 
-        public ActionResult GetPODetail(int? Order_No)
+        [HttpGet]
+        public ActionResult GetPODetail(int Order_No)
         {
-            if (Order_No == null)
+            using (POentity db = new POentity())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var dbRecord = db.ProductOrderLists.Where(t => t.Order_No == Order_No).FirstOrDefault();
+                return Json(dbRecord, JsonRequestBehavior.AllowGet);
             }
-            ProductOrderList POL = _db.ProductOrderLists.Find(Order_No);
-            if (POL == null)
-            {
-                return HttpNotFound();
-            }
-            return View(POL);
+
+            
         }
 
         public JsonResult GetAllProducts()

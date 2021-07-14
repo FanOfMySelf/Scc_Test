@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using ProductOrder.Models;
 using System.Web.Script.Serialization;
 using System.Data.Entity;
+using System.Net;
 
 namespace ProductOrder.Controllers
 {
@@ -26,7 +27,21 @@ namespace ProductOrder.Controllers
 
         public ActionResult Test()
         {
-            return View();
+            return View(_db.ProductOrderLists.ToList());
+        }
+
+        public ActionResult GetPODetail(int? Order_No)
+        {
+            if (Order_No == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ProductOrderList POL = _db.ProductOrderLists.Find(Order_No);
+            if (POL == null)
+            {
+                return HttpNotFound();
+            }
+            return View(POL);
         }
 
         public JsonResult GetAllProducts()
@@ -90,5 +105,6 @@ namespace ProductOrder.Controllers
             }
         }
 
+      
     }
 }

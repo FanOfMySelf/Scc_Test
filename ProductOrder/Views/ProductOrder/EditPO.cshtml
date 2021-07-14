@@ -61,19 +61,17 @@
     }
 
     var Edit_PO_line = {
-        EditPOline:'@Url.Action("UpdatePOline", "ProductOrder")'
+        EditPO_line:'@Url.Action("UpdatePOline", "ProductOrder")'
     }
     </script>
 
     <script id="customMessageTemplate" type="text/html">
-     
+
         <em class="customMessage" data-bind="validationMessage: field"></em>
     </script>
 
-    <fieldset>
-        @*<legend class="well">
-            User: <strong data-bind="text: ProductOrderViewModel.errors().length"></strong> errors
-        </legend>*@
+    <fieldset >
+      
         <div id="Navbar">
             <h2>Purchase order <span data-bind="text: getSeletedPO ().Order_No"></span></h2>
         </div>
@@ -82,7 +80,7 @@
             Warning: This PO cannot be modified because already cancelled.
         </h1>
         <h1></h1>
-        <div class="container" style="border:1px solid #cecece;">
+        <div class="container" style="border:1px solid #cecece;" >
             <div class="row">
                 <h1></h1>
                 <div class="col-sm-4">
@@ -90,9 +88,9 @@
                     <h1></h1>
                     <p>Stock Site:<span style="margin-left: 38px;"><input type="text" data-bind="value:getSeletedPO() .Stock_Site ,enable:false " /></span> </p>
                     <h1></h1>
-                    <p>Order Date:<span style="margin-left: 30px;"><input type="date" data-bind="value: getSeletedPO() .Order_Date ,enable:getSeletedPO().Cancel != true " /></span> </p>
+                    <p>Order Date:<span style="margin-left: 30px;"><input type="text" data-bind="value: validateDATE ,enable:getSeletedPO().Cancel != true ,enable:CancelAll() != true" /></span> </p>
                     <h1></h1>
-                    <p>Note: <span style="margin-left: 30px;"><textarea data-bind="textInput: getSeletedPO() .Note,enable:getSeletedPO().Cancel != true " rows="4" cols="50"> </textarea> </span>
+                    <p>Note: <span style="margin-left: 30px;"><textarea data-bind="textInput: getSeletedPO() .Note,enable:getSeletedPO().Cancel != true ,enable:CancelAll() != true" rows="4" cols="50"> </textarea> </span>
                 </div>
 
                 <div class="col-sm-2"></div>
@@ -100,21 +98,21 @@
                 <div class="col-sm-5">
                     <div class="row">Supplier name:<span style="margin-left: 10px;"><input type="text" data-bind="value: getSeletedPO() .Supplier_name ,enable:false " /></span> </div>
                     <h1></h1>
-                    <div class="row">Stock Name:<span style="margin-left: 22px;"><input type="text" data-bind="value: getSeletedPO() .Stock_Name ,enable:getSeletedPO().Cancel != true " /></span> </div>
+                    <div class="row">Stock Name:<span style="margin-left: 22px;"><input type="text" data-bind="value: getSeletedPO() .Stock_Name ,enable:getSeletedPO().Cancel != true ,enable:CancelAll() != true" /></span> </div>
                     <h1></h1>
                     <div class="row">
-                        Address<span style="color: red" ;>*: </span><span style="margin-left: 35px;"> <textarea data-bind="value: getSeletedPO().Address,enable:getSeletedPO().Cancel != true" rows="4" cols="30"> </textarea> </span>
+                        Address<span style="color: red" ;>*: </span><span style="margin-left: 35px;"> <textarea data-bind="value: validateADR,enable:getSeletedPO().Cancel != true,enable:CancelAll() != true" rows="4" cols="30"> </textarea> </span>
                         <h1></h1>
                     </div>
 
                     <div class="row">
-                        Country<span style="color: red">*: </span> <span style="margin-left: 38px;"><input type="text" data-bind="value: getSeletedPO().Country ,enable:getSeletedPO().Cancel != true " /></span>
+                        Country<span style="color: red">*: </span> <span style="margin-left: 38px;"><input type="text" data-bind="value:validateCT ,enable:getSeletedPO().Cancel != true,enable:CancelAll() != true " /></span>
                     </div>
 
                     <h1></h1>
 
                     <div class="row">
-                        Postcode<span style="color: red">*: </span> <span style="margin-left: 28px;"><input type="text" data-bind="value: getSeletedPO().Post_Code ,enable:getSeletedPO().Cancel != true " /></span>
+                        Postcode<span style="color: red">*: </span> <span style="margin-left: 28px;"><input type="text" data-bind="value: validatePC ,enable:getSeletedPO().Cancel != true,enable:CancelAll() != true  " /></span>
                     </div>
 
                 </div>
@@ -150,16 +148,16 @@
         <input data-bind="value:PO_price ,enable:false" />
     </div>
     @*<div>
-        <a href="#" data-bind="click: $root.AddPOlines">Add Purchase order line</a>
-    </div>*@
+            <a href="#" data-bind="click: $root.AddPOlines">Add Purchase order line</a>
+        </div>*@
 
     <fieldset>
         <button type="button" data-bind='enable: getSeletedPO().Cancel != true,click: submit'>Submit</button>
         &nbsp;
     </fieldset>
-    <button id="check" data-bind="enable: getSeletedPO().Cancel != true,click: EditPOline">Save</button> <span><button data-bind="enable: getSeletedPO().Cancel != true,click: $root.CancelPO">Cancel PO</button></span>
+    <button id="check" data-bind="enable: getSeletedPO().Cancel != true,enable: Cancel_Save_Visible  ,click: EditPO">Save</button> <span><button data-bind="enable: getSeletedPO().Cancel != true,click: $root.CancelPO">Cancel PO</button></span>
 
-    
+
 
 
     <p id="demo"></p>
@@ -171,8 +169,7 @@
     <script src="~/Scripts/jquery.js"></script>
     <script src="~/Scripts/knockout.min.js"></script>
     <script src="~/Scripts/knockout.validation.js"></script>
-    <script src="~/Scripts/POlist.js"></script>
-
+    <script src="~/Scripts/PO_Edit.js"></script>
 
     <div>
         @Html.ActionLink("Back to PO list", "ProductOrder")
